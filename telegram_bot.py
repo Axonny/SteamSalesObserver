@@ -3,11 +3,12 @@ import telebot
 from helper import Helper
 from threading import Thread
 from SECRET import telegram_bot_token
+from subscribe_json import SubscribeJson
 from steam_sales_observer import SteamSalesObserver
 
 bot = telebot.TeleBot(telegram_bot_token)
 observer = SteamSalesObserver()
-subscribers = {}
+subscribers = SubscribeJson()
 
 
 @bot.message_handler(commands=['start'])
@@ -19,13 +20,13 @@ def welcome(message):
 
 @bot.message_handler(commands=['subscribe'])
 def subscribe(message):
-    subscribers[message.chat.id] = message.from_user.first_name
+    subscribers.subscribe(message.chat.id, message.from_user.first_name)
     bot.send_message(message.chat.id, Helper.subscribe_text)
 
 
 @bot.message_handler(commands=['unsubscribe'])
 def unsubscribe(message):
-    subscribers.pop(message.chat.id)
+    subscribers.unsubscribe(message.chat.id)
     bot.send_message(message.chat.id, Helper.unsubscribe_text)
 
 

@@ -1,1 +1,3 @@
 # SteamSalesObserver
+
+Tg Bot: `@RoxyAxonnyBot`
